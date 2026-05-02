@@ -178,18 +178,6 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
-  if (
-    APPS_SCRIPT_WEB_APP_URL.includes(
-      "https://script.google.com/macros/s/AKfycbw_TaHEwkAPaaQz3-WAh7oNABuYF7jtxKDRQK6TLbn2_QMZkUdZvUWLwpqq3cDspIrg/exec",
-    )
-  ) {
-    setStatus(
-      "Please configure your Apps Script web app URL in app.js first.",
-      "error",
-    );
-    return;
-  }
-
   submitBtn.disabled = true;
   setStatus("Searching...", "");
 
