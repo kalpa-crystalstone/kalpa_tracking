@@ -1,16 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Friday</title>
-</head>
-<body>
-    <h1>Kalpa Crystalstone Tracking</h1>
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ติดตามเลขพัสดุ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="search-card">
+        <h1 class="title-with-icon">
+          ติดตามเลขพัสดุ
+          <img src="./assets/box.svg" alt="กล่องพัสดุ" width="20" />
+        </h1>
+        <p class="hint">
+          กรอกเบอร์โทรศัพท์ที่ตรงกับที่อยู่ผู้จัดส่ง ตัวอย่าง 0812345678
+        </p>
 
-    <div class="tenor-gif-embed" data-postid="24196108" data-share-method="host" data-aspect-ratio="1" data-width="20%"><a href="https://tenor.com/view/leo-toast-gif-24196108">Leo Toast GIF</a>from <a href="https://tenor.com/search/leo+toast-gifs">Leo Toast GIFs</a>
-</div> 
+        <!-- Added ID to form for the submit listener -->
+        <form id="lookup-form" class="search-row">
+          <label class="input-wrap">
+            <img class="input-icon" src="./assets/phone.svg" alt="โทรศัพท์" />
+            <!-- Added ID here -->
+            <input
+              id="mobile-number"
+              type="tel"
+              placeholder="กรอกเบอร์โทรศัพท์"
+              required
+            />
+          </label>
+          <!-- Added ID here -->
+          <button id="submit-btn" class="search-btn" type="submit">
+            <img
+              class="search-btn-icon"
+              src="./assets/search.svg"
+              alt=""
+              aria-hidden="true"
+            />
+            <span>ค้นหา</span>
+          </button>
+        </form>
 
-<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-</body>
+        <!-- Added status element to show "Searching..." or "Error" -->
+        <div
+          id="status"
+          class="status-message"
+          style="margin-top: 10px; font-size: 14px"
+        ></div>
+      </section>
+
+      <section class="list-card">
+        <h2 class="title">รายการเลขพัสดุ</h2>
+
+        <div id="empty-state" class="empty-state">
+          <img src="./assets/truck.svg" alt="รถบรรทุก" width="386" />
+          <p class="empty-text">ยังไม่มีรายการ</p>
+        </div>
+
+        <!-- result-section matches the JS 'resultSection' variable -->
+        <div
+          id="result-section"
+          class="items-list hidden"
+          style="display: none"
+        >
+          <ul id="result-list"></ul>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
 </html>
