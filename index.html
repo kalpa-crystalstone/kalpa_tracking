@@ -58,18 +58,19 @@
       <section class="list-card">
         <h2 class="title">รายการเลขพัสดุ</h2>
 
+        <!-- This shows when there are NO items -->
         <div id="empty-state" class="empty-state">
           <img src="./assets/truck.svg" alt="รถบรรทุก" width="386" />
           <p class="empty-text">ยังไม่มีรายการ</p>
         </div>
 
-        <!-- result-section matches the JS 'resultSection' variable -->
-        <div
-          id="result-section"
-          class="items-list hidden"
-          style="display: none"
-        >
-          <ul id="result-list"></ul>
+        <!-- This is the container the JS toggles -->
+        <div id="result-section" style="display: none">
+          <!-- CRITICAL: This UL must exist for your JS loop to work -->
+          <ul
+            id="result-list"
+            style="list-style: none; padding: 0; margin: 0"
+          ></ul>
         </div>
       </section>
     </main>
