@@ -227,9 +227,13 @@ body {
 
 #result-list,
 .group-list {
-  list-style: none; /* This removes the prefix dot */
-  padding: 0; /* Removes the default indentation */
+  list-style: none;
+  padding: 0;
   margin: 0;
+}
+
+.group-list li {
+  list-style: none !important;
 }
 
 /* Ensure the list items don't have unexpected padding */
