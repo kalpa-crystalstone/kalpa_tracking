@@ -225,6 +225,19 @@ body {
   background: #404040;
 }
 
+#result-list,
+.group-list {
+  list-style: none; /* This removes the prefix dot */
+  padding: 0; /* Removes the default indentation */
+  margin: 0;
+}
+
+/* Ensure the list items don't have unexpected padding */
+.time-group,
+.result-item {
+  list-style-type: none;
+}
+
 @media (max-width: 768px) {
   .hint {
     font-size: 14px;

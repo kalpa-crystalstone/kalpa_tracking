@@ -131,18 +131,18 @@ function renderResults(records) {
       const row = document.createElement("li");
       row.className = "result-item";
 
-      // Match the layout: [Icon] [Tracking Number] [Button]
+      // Using a clean structure without any bullet characters
       row.innerHTML = `
         <div class="item-content">
           <div class="tracking-info">
-            <img src="./assets/box-open.svg" class="item-icon" alt="parcel">
+            <img src="assets/box-open.svg" class="item-icon" alt="parcel">
             <span class="tracking-number">${record.trackingNumber}</span>
           </div>
           <a href="${KEX_TRACK_BASE_URL}${encodeURIComponent(record.trackingNumber.toUpperCase())}" 
              target="_blank" 
              rel="noopener noreferrer" 
              class="track-btn">
-             <img src="./assets/truck-fast.svg" width="16"> ติดตามพัสดุ KEX
+             ติดตามพัสดุ KEX
           </a>
         </div>
       `;
