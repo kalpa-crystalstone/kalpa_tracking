@@ -1,25 +1,69 @@
 const APPS_SCRIPT_WEB_APP_URL =
   "https://script.google.com/macros/s/AKfycbw_TaHEwkAPaaQz3-WAh7oNABuYF7jtxKDRQK6TLbn2_QMZkUdZvUWLwpqq3cDspIrg/exec";
+const KEX_TRACK_BASE_URL = "https://th.kex-express.com/th/track/?track=";
 
 const form = document.getElementById("lookup-form");
 const mobileInput = document.getElementById("mobile-number");
 const submitBtn = document.getElementById("submit-btn");
-const statusEl = document.getElementById("status");
 const resultSection = document.getElementById("result-section");
 const resultList = document.getElementById("result-list");
-const KEX_TRACK_BASE_URL = "https://th.kex-express.com/th/track/?track=";
+
 const emptyState = document.getElementById("empty-state");
+const loadingState = document.getElementById("loading-state");
+const errorState = document.getElementById("error-state");
+
+// Add this helper function at the top or bottom of app.js
+function showToast(message) {
+  // Create toast element if it doesn't exist
+  let toast = document.getElementById("error-toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "error-toast";
+    toast.className = "toast";
+    document.body.appendChild(toast);
+  }
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  // Auto-hide after 3 seconds
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}
 
 function setStatus(message, type = "") {
-  statusEl.textContent = message;
-  statusEl.className = `status ${type}`.trim();
-  statusEl.style.color = type === "error" ? "#ff4d4d" : "#ffffff";
+  loadingState.classList.remove("is-visible");
+  document.body.classList.remove("no-scroll");
+
+  if (emptyState) emptyState.style.display = "none";
+  if (errorState) errorState.style.display = "none";
+
+  if (type === "loading") {
+    loadingState.classList.add("is-visible");
+    document.body.classList.add("no-scroll");
+  }
+
+  if (type === "error") {
+    showToast(message);
+
+    if (emptyState) emptyState.style.display = "flex";
+  }
+
+  if (type === "success") {
+    // Handled by renderResults
+  }
 }
 
 function clearResults() {
   resultList.innerHTML = "";
-  resultSection.style.display = "none"; // Hide results
-  emptyState.style.display = "flex"; // Show the truck
+  resultSection.style.display = "none";
+
+  emptyState.style.display = "flex";
+
+  // Hide the top counter
+  const totalCountLabel = document.getElementById("total-count-label");
+  if (totalCountLabel) totalCountLabel.style.display = "none";
 }
 
 function normalizeRecords(data) {
@@ -70,19 +114,22 @@ function getDateGroupKey(timestampValue) {
 }
 
 function formatDateLabelFromKey(dateKey) {
-  if (!dateKey || dateKey === "NO_DATE") return "No date";
+  if (!dateKey || dateKey === "NO_DATE") return "ไม่ระบุวันที่";
+
   const parsed = new Date(dateKey);
   if (Number.isNaN(parsed.getTime())) return dateKey;
-  return parsed.toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+
+  // Use 'th-TH' for Thai language
+  return parsed.toLocaleDateString("th-TH", {
+    day: "2-digit", // Forces "02" instead of "2"
+    month: "long", // "พฤษภาคม"
+    year: "numeric", // "2569" (Buddhist Era) or "2026" (Christian Era)
   });
 }
 
 function formatDateLabel(timestampValue) {
   const key = getDateGroupKey(timestampValue);
-  if (!key || key === "NO_DATE") return "No date";
+  if (!key || key === "NO_DATE") return "ไม่ระบุวันที่";
   const date = parseTimestamp(key);
   if (!date) return key;
   return date.toLocaleDateString(undefined, {
@@ -106,14 +153,24 @@ function groupRecordsByDate(records) {
 
 function renderResults(records) {
   clearResults();
+
+  // 1. Get the total count and update the top label
+  const totalCountLabel = document.getElementById("total-count-label");
+  if (records.length > 0) {
+    totalCountLabel.textContent = `(ทั้งหมด ${records.length} รายการ)`;
+    totalCountLabel.style.display = "inline-block"; // Show it
+  } else {
+    totalCountLabel.style.display = "none"; // Hide if no results
+  }
+
   const grouped = groupRecordsByDate(records);
+  const dateKeys = Array.from(grouped.keys());
 
   grouped.forEach((groupItems, dateKey) => {
-    // Create the main group container (the grey bar section)
+    const isLatestDate = dateKey === dateKeys[0];
     const groupLi = document.createElement("li");
     groupLi.className = "time-group";
 
-    // Create header with date and item count: "02 MAY 2026 (1 รายการ)"
     const dateLabel = formatDateLabelFromKey(dateKey);
     const itemCount = groupItems.length;
 
@@ -126,23 +183,27 @@ function renderResults(records) {
 
     const groupList = groupLi.querySelector(".group-list");
 
-    // Loop through each tracking number in this date group
     groupItems.forEach((record) => {
       const row = document.createElement("li");
       row.className = "result-item";
 
-      // Using a clean structure without any bullet characters
+      // Keep your bold logic for the latest date
+      const fontWeight = isLatestDate
+        ? "font-weight: 700;"
+        : "font-weight: 400;";
+
       row.innerHTML = `
         <div class="item-content">
           <div class="tracking-info">
-            <img src="assets/box-open.svg" class="item-icon" alt="parcel">
-            <span class="tracking-number">${record.trackingNumber}</span>
+            <img src="assets/box-black.svg" class="item-icon" alt="parcel">
+            <span class="tracking-number" style="${fontWeight}">${record.trackingNumber.toUpperCase()}</span>
           </div>
           <a href="${KEX_TRACK_BASE_URL}${encodeURIComponent(record.trackingNumber.toUpperCase())}" 
              target="_blank" 
              rel="noopener noreferrer" 
              class="track-btn">
-             ติดตามพัสดุ KEX
+             <img src="assets/delivery-truck.svg" alt="" class="btn-icon">
+             <span>ติดตามพัสดุ KEX</span>
           </a>
         </div>
       `;
@@ -156,54 +217,6 @@ function renderResults(records) {
   resultSection.style.display = "block";
 }
 
-// function renderResults(records) {
-//   clearResults();
-//   const grouped = groupRecordsByDate(records);
-
-//   grouped.forEach((groupItems, dateKey) => {
-//     const groupLi = document.createElement("li");
-//     groupLi.className = "time-group";
-
-//     const groupTitle = document.createElement("h3");
-//     groupTitle.className = "time-group-title";
-//     groupTitle.textContent = formatDateLabelFromKey(dateKey);
-//     groupLi.appendChild(groupTitle);
-
-//     const groupList = document.createElement("ul");
-//     groupList.className = "group-list";
-
-//     groupItems.forEach((record) => {
-//       const row = document.createElement("li");
-//       row.className = "result-item";
-
-//       const textWrap = document.createElement("div");
-//       textWrap.className = "item-text";
-
-//       const trackingText = document.createElement("div");
-//       trackingText.className = "tracking-number";
-//       trackingText.textContent = record.trackingNumber;
-
-//       const kexLink = document.createElement("a");
-//       kexLink.className = "track-btn";
-//       kexLink.href = `${KEX_TRACK_BASE_URL}${encodeURIComponent(record.trackingNumber.toUpperCase())}`;
-//       kexLink.target = "_blank";
-//       kexLink.rel = "noopener noreferrer";
-//       kexLink.textContent = "Track on KEX";
-
-//       textWrap.appendChild(trackingText);
-//       row.appendChild(textWrap);
-//       row.appendChild(kexLink);
-//       groupList.appendChild(row);
-//     });
-
-//     groupLi.appendChild(groupList);
-//     resultList.appendChild(groupLi);
-//   });
-
-//   emptyState.style.display = "none"; // Hide the truck
-//   resultSection.style.display = "block"; // Show the list
-// }
-
 async function fetchTrackingByMobile(mobileNumber) {
   const url = `${APPS_SCRIPT_WEB_APP_URL}?mobile=${encodeURIComponent(mobileNumber)}`;
   const response = await fetch(url, {
@@ -214,7 +227,7 @@ async function fetchTrackingByMobile(mobileNumber) {
   });
 
   if (!response.ok) {
-    throw new Error(`Request failed with status ${response.status}`);
+    throw new Error(`ระบบเกิดข้อผิดพลาด ${response.status}`);
   }
 
   return response.json();
@@ -226,31 +239,31 @@ form.addEventListener("submit", async (event) => {
 
   const mobileNumber = mobileInput.value.trim();
   if (!mobileNumber) {
-    setStatus("Please enter a mobile number.", "error");
+    setStatus("กรุณาระบุเบอร์โทรศัพท์", "error");
     return;
   }
 
   submitBtn.disabled = true;
-  setStatus("Searching...", "");
+  setStatus("กำลังค้นหา...", "loading");
 
   try {
     const data = await fetchTrackingByMobile(mobileNumber);
     if (!data.success) {
-      throw new Error(data.message || "Unknown error from server.");
+      throw new Error(data.message || "ระบบเกิดข้อผิดพลาด");
     }
 
     const records = normalizeRecords(data).filter(
       (item) => item.trackingNumber,
     );
     if (records.length === 0) {
-      setStatus("No tracking numbers found for this mobile number.", "error");
+      setStatus("ไม่พบข้อมูล", "error");
       return;
     }
 
     renderResults(records);
-    setStatus(`Found ${records.length} tracking number(s).`, "success");
+    setStatus(`พบข้อมูลทั้งหมด ${records.length} รายการ`, "success");
   } catch (error) {
-    setStatus(`Error: ${error.message}`, "error");
+    setStatus(`เกิดข้อผิดพลาด: ${error.message}`, "error");
   } finally {
     submitBtn.disabled = false;
   }

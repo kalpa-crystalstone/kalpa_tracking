@@ -97,6 +97,7 @@ body {
   font-family: inherit;
   background-color: #ffffff;
   line-height: 1;
+  /* color: #262626; */
 }
 
 .search-btn-icon {
@@ -157,29 +158,27 @@ body {
 
 /* Date Header Bar */
 .time-group-header {
-  background: #f2f3f5;
+  background: #f0f0f0;
   padding: 8px 16px;
-  border-radius: 8px 8px 0 0;
-  margin-top: 16px;
+  border-radius: 16px 16px 0 0;
 }
 
 .time-group-title {
-  font-size: 14px;
-  color: #8d95a2;
+  font-size: 16px;
+  color: #9d9d9d;
   margin: 0;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
 .time-group-title span {
   font-weight: 400;
-  color: #abb2bc;
+  color: #9d9d9d;
 }
 
 /* Tracking Item Row */
 .result-item {
   background: #ffffff;
-  border-bottom: 1px solid #f0f0f0;
   padding: 16px;
 }
 
@@ -191,7 +190,6 @@ body {
 
 .tracking-info {
   display: flex;
-  align-items: center;
   gap: 12px;
 }
 
@@ -202,8 +200,8 @@ body {
 
 .tracking-number {
   font-size: 18px;
-  font-weight: 700;
-  color: #171a1f;
+  font-weight: 500;
+  color: #060414;
 }
 
 /* KEX Button Style */
@@ -236,10 +234,73 @@ body {
   list-style: none !important;
 }
 
-/* Ensure the list items don't have unexpected padding */
 .time-group,
 .result-item {
   list-style-type: none;
+  background-color: #fbfbfb;
+}
+
+.time-group:first-child .tracking-number {
+  font-weight: 700 !important;
+  color: #000000;
+}
+
+.time-group ~ .time-group .tracking-number {
+  font-weight: 400;
+}
+
+.count-label {
+  color: #9d9d9d;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+#loading-state {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#loading-state.is-visible {
+  display: flex !important;
+}
+
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background-color: #ff4d4f;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 10001;
+  transition:
+    transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28),
+    opacity 0.3s;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
 }
 
 @media (max-width: 768px) {

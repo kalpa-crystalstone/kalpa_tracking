@@ -16,18 +16,16 @@
     <main class="page">
       <section class="search-card">
         <h1 class="title-with-icon">
-          ติดตามเลขพัสดุ
           <img src="./assets/box.svg" alt="กล่องพัสดุ" width="20" />
+          ติดตามเลขพัสดุ
         </h1>
         <p class="hint">
           กรอกเบอร์โทรศัพท์ที่ตรงกับที่อยู่ผู้จัดส่ง ตัวอย่าง 0812345678
         </p>
 
-        <!-- Added ID to form for the submit listener -->
         <form id="lookup-form" class="search-row">
           <label class="input-wrap">
             <img class="input-icon" src="./assets/phone.svg" alt="โทรศัพท์" />
-            <!-- Added ID here -->
             <input
               id="mobile-number"
               type="tel"
@@ -35,36 +33,32 @@
               required
             />
           </label>
-          <!-- Added ID here -->
           <button id="submit-btn" class="search-btn" type="submit">
-            <img
-              class="search-btn-icon"
-              src="./assets/search.svg"
-              alt=""
-              aria-hidden="true"
-            />
             <span>ค้นหา</span>
           </button>
         </form>
-
-        <!-- Added status element to show "Searching..." or "Error" -->
-        <div
-          id="status"
-          class="status-message"
-          style="margin-top: 10px; font-size: 14px"
-        ></div>
       </section>
 
       <section class="list-card">
-        <h2 class="title">รายการเลขพัสดุ</h2>
+        <h2 class="title">
+          รายการเลขพัสดุ
+          <span
+            id="total-count-label"
+            class="count-label"
+            style="display: none"
+          ></span>
+        </h2>
 
-        <!-- This shows when there are NO items -->
         <div id="empty-state" class="empty-state">
           <img src="./assets/truck.svg" alt="รถบรรทุก" width="386" />
           <p class="empty-text">ยังไม่มีรายการ</p>
         </div>
 
-        <!-- This is the container the JS toggles -->
+        <div id="error-state" class="empty-state" style="display: none">
+          <img src="assets/search.svg" alt="error" width="386" />
+          <p class="empty-text">ไม่พบข้อมูล หรือ เกิดข้อผิดพลาด</p>
+        </div>
+
         <div id="result-section" style="display: none">
           <ul
             id="result-list"
@@ -74,6 +68,10 @@
       </section>
     </main>
 
+    <div id="loading-state">
+      <img src="assets/search.svg" alt="loading" width="120" />
+      <p class="empty-text">กำลังค้นหาข้อมูล...</p>
+    </div>
     <script src="./app.js"></script>
   </body>
 </html>
