@@ -1,174 +1,244 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    font-family: "Noto Sans Thai", sans-serif;
-    background: #f2f3f5;
-    color: #171a1f;
+  margin: 0;
+  font-family: "Noto Sans Thai", sans-serif;
+  background: #f2f3f5;
+  color: #171a1f;
 }
 
 .page {
-    max-width: 980px;
-    margin: 28px auto;
-    padding: 0 18px;
+  max-width: 980px;
+  margin: 28px auto;
+  padding: 0 18px;
 }
 
 .search-card {
-    background: #161a1f;
-    border-radius: 24px;
-    padding: 16px 18px;
-    color: #ffffff;
-    margin-bottom: 12px;
+  background: #161a1f;
+  border-radius: 24px;
+  padding: 16px 18px;
+  color: #ffffff;
+  margin-bottom: 12px;
 }
 
 .search-card h1 {
-    margin: 0;
-    font-size: 24px;
-    line-height: 1.2;
-    font-weight: 500;
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 500;
 }
 
 .title-with-icon {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .hint {
-    margin-top: 2px;
-    margin-bottom: 14px;
-    color: #e2e7f0;
-    font-size: 16px;
+  margin-top: 2px;
+  margin-bottom: 14px;
+  color: #e2e7f0;
+  font-size: 16px;
 }
 
 .search-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .input-wrap {
-    flex: 1;
-    background: #ffffff;
-    border-radius: 16px;
-    border: 1px solid #d6dbe4;
-    display: flex;
-    align-items: center;
-    padding: 0 14px;
-    min-height: 48px;
+  flex: 1;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #d6dbe4;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  min-height: 48px;
 }
 
 .input-icon {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    margin-right: 4px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-right: 4px;
 }
 
 .input-wrap input {
-    width: 100%;
-    border: 0;
-    outline: 0;
-    font-size: 16px;
-    color: #060414;
-    font-family: inherit;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  font-size: 16px;
+  color: #060414;
+  font-family: inherit;
 }
 
 .input-wrap input::placeholder {
-    font-size: 16px;
-    color: #9D9D9D;
+  font-size: 16px;
+  color: #9d9d9d;
 }
 
 .search-btn {
-    border: 0;
-    min-height: 48px;
-    min-width: 82px;
-    border-radius: 16px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 8px 8px;
-    font-size: 18px;
-    font-weight: 500;
-    cursor: pointer;
-    font-family: inherit;
-    background-color: #ffffff;
-    line-height: 1;
+  border: 0;
+  min-height: 48px;
+  min-width: 82px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 8px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  background-color: #ffffff;
+  line-height: 1;
 }
 
 .search-btn-icon {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 .search-btn span {
-    transform: translateY(1px);
+  transform: translateY(1px);
 }
 
 .list-card {
-    background: #ffffff;
-    border-radius: 24px;
-    min-height: 470px;
-    padding: 26px 24px 30px;
+  background: #ffffff;
+  border-radius: 24px;
+  min-height: 470px;
+  padding: 26px 24px 30px;
 }
 
 .list-card h2 {
-    margin: 0;
-    font-size: 38px;
-    font-weight: 500;
+  margin: 0;
+  font-size: 38px;
+  font-weight: 500;
 }
 
 .list-card h2.title {
-    font-size: 24px; 
-    margin: 0 0 16px 0;
+  font-size: 24px;
+  margin: 0 0 16px 0;
 }
 
 .empty-state {
-    display: flex;
-    flex-direction: column;   
-    align-items: center;      
-    justify-content: center;  
-    width: 100%;              
-    padding: 60px 0;          
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 60px 0;
+  text-align: center;
 }
 
 .empty-state img {
-    display: block;
-    margin: 0 auto 20px auto;  
-    max-width: 100%;     
-    height: auto;
+  display: block;
+  margin: 0 auto 20px auto;
+  max-width: 100%;
+  height: auto;
 }
 
 .empty-text {
-    font-size: 24px;
-    color: #797979;
-    margin: 16px 0 0 0;
+  font-size: 24px;
+  color: #797979;
+  margin: 16px 0 0 0;
 }
 
 .truck {
-    width: 300px;
-    max-width: 80%;
-    height: auto;
+  width: 300px;
+  max-width: 80%;
+  height: auto;
+}
+
+/* Date Header Bar */
+.time-group-header {
+  background: #f2f3f5;
+  padding: 8px 16px;
+  border-radius: 8px 8px 0 0;
+  margin-top: 16px;
+}
+
+.time-group-title {
+  font-size: 14px;
+  color: #8d95a2;
+  margin: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.time-group-title span {
+  font-weight: 400;
+  color: #abb2bc;
+}
+
+/* Tracking Item Row */
+.result-item {
+  background: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 16px;
+}
+
+.item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tracking-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.item-icon {
+  width: 20px;
+  opacity: 0.7;
+}
+
+.tracking-number {
+  font-size: 18px;
+  font-weight: 700;
+  color: #171a1f;
+}
+
+/* KEX Button Style */
+.track-btn {
+  background: #262626;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.track-btn:hover {
+  background: #404040;
 }
 
 @media (max-width: 768px) {
-    .hint {
-        font-size: 14px;
-    }
+  .hint {
+    font-size: 14px;
+  }
 
-    .search-btn {
-        min-width: 72px;
-    }
+  .search-btn {
+    min-width: 72px;
+  }
 
-    .list-card h2 {
-        font-size: 26px;
-    }
+  .list-card h2 {
+    font-size: 26px;
+  }
 
-    .empty-text {
-        font-size: 32px;
-    }
+  .empty-text {
+    font-size: 32px;
+  }
 }

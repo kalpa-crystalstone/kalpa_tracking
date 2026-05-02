@@ -109,48 +109,100 @@ function renderResults(records) {
   const grouped = groupRecordsByDate(records);
 
   grouped.forEach((groupItems, dateKey) => {
+    // Create the main group container (the grey bar section)
     const groupLi = document.createElement("li");
     groupLi.className = "time-group";
 
-    const groupTitle = document.createElement("h3");
-    groupTitle.className = "time-group-title";
-    groupTitle.textContent = formatDateLabelFromKey(dateKey);
-    groupLi.appendChild(groupTitle);
+    // Create header with date and item count: "02 MAY 2026 (1 รายการ)"
+    const dateLabel = formatDateLabelFromKey(dateKey);
+    const itemCount = groupItems.length;
 
-    const groupList = document.createElement("ul");
-    groupList.className = "group-list";
+    groupLi.innerHTML = `
+      <div class="time-group-header">
+        <h3 class="time-group-title">${dateLabel} <span>(${itemCount} รายการ)</span></h3>
+      </div>
+      <ul class="group-list"></ul>
+    `;
 
+    const groupList = groupLi.querySelector(".group-list");
+
+    // Loop through each tracking number in this date group
     groupItems.forEach((record) => {
       const row = document.createElement("li");
       row.className = "result-item";
 
-      const textWrap = document.createElement("div");
-      textWrap.className = "item-text";
-
-      const trackingText = document.createElement("div");
-      trackingText.className = "tracking-number";
-      trackingText.textContent = record.trackingNumber;
-
-      const kexLink = document.createElement("a");
-      kexLink.className = "track-btn";
-      kexLink.href = `${KEX_TRACK_BASE_URL}${encodeURIComponent(record.trackingNumber.toUpperCase())}`;
-      kexLink.target = "_blank";
-      kexLink.rel = "noopener noreferrer";
-      kexLink.textContent = "Track on KEX";
-
-      textWrap.appendChild(trackingText);
-      row.appendChild(textWrap);
-      row.appendChild(kexLink);
+      // Match the layout: [Icon] [Tracking Number] [Button]
+      row.innerHTML = `
+        <div class="item-content">
+          <div class="tracking-info">
+            <img src="./assets/box-open.svg" class="item-icon" alt="parcel">
+            <span class="tracking-number">${record.trackingNumber}</span>
+          </div>
+          <a href="${KEX_TRACK_BASE_URL}${encodeURIComponent(record.trackingNumber.toUpperCase())}" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="track-btn">
+             <img src="./assets/truck-fast.svg" width="16"> ติดตามพัสดุ KEX
+          </a>
+        </div>
+      `;
       groupList.appendChild(row);
     });
 
-    groupLi.appendChild(groupList);
     resultList.appendChild(groupLi);
   });
 
-  emptyState.style.display = "none"; // Hide the truck
-  resultSection.style.display = "block"; // Show the list
+  emptyState.style.display = "none";
+  resultSection.style.display = "block";
 }
+
+// function renderResults(records) {
+//   clearResults();
+//   const grouped = groupRecordsByDate(records);
+
+//   grouped.forEach((groupItems, dateKey) => {
+//     const groupLi = document.createElement("li");
+//     groupLi.className = "time-group";
+
+//     const groupTitle = document.createElement("h3");
+//     groupTitle.className = "time-group-title";
+//     groupTitle.textContent = formatDateLabelFromKey(dateKey);
+//     groupLi.appendChild(groupTitle);
+
+//     const groupList = document.createElement("ul");
+//     groupList.className = "group-list";
+
+//     groupItems.forEach((record) => {
+//       const row = document.createElement("li");
+//       row.className = "result-item";
+
+//       const textWrap = document.createElement("div");
+//       textWrap.className = "item-text";
+
+//       const trackingText = document.createElement("div");
+//       trackingText.className = "tracking-number";
+//       trackingText.textContent = record.trackingNumber;
+
+//       const kexLink = document.createElement("a");
+//       kexLink.className = "track-btn";
+//       kexLink.href = `${KEX_TRACK_BASE_URL}${encodeURIComponent(record.trackingNumber.toUpperCase())}`;
+//       kexLink.target = "_blank";
+//       kexLink.rel = "noopener noreferrer";
+//       kexLink.textContent = "Track on KEX";
+
+//       textWrap.appendChild(trackingText);
+//       row.appendChild(textWrap);
+//       row.appendChild(kexLink);
+//       groupList.appendChild(row);
+//     });
+
+//     groupLi.appendChild(groupList);
+//     resultList.appendChild(groupLi);
+//   });
+
+//   emptyState.style.display = "none"; // Hide the truck
+//   resultSection.style.display = "block"; // Show the list
+// }
 
 async function fetchTrackingByMobile(mobileNumber) {
   const url = `${APPS_SCRIPT_WEB_APP_URL}?mobile=${encodeURIComponent(mobileNumber)}`;
