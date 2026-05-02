@@ -308,21 +308,46 @@ body {
     font-size: 14px;
   }
 
-  .search-btn {
-    min-width: 72px;
-  }
-
   .list-card h2 {
     font-size: 26px;
+  }
+
+  .list-card h2.title {
+    font-size: 20px;
+    margin: 0 0 16px 0;
   }
 
   .empty-text {
     font-size: 32px;
   }
 
-  search-btn {
+  .search-btn {
     min-width: auto;
     padding: 8px 20px;
+    font-size: 16px;
+  }
+
+  .empty-state img {
+    display: block;
+    max-width: 70%;
+    height: auto;
+  }
+
+  .empty-text {
+    font-size: 16px;
+  }
+
+  .track-btn {
+    padding: 10px 10px;
     font-size: 10px;
+  }
+
+  .track-btn img {
+    max-width: 40%;
+    height: auto;
+  }
+
+  .tracking-number {
+    font-size: 14px;
   }
 }

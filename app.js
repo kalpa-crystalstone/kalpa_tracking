@@ -203,7 +203,7 @@ function renderResults(records) {
              rel="noopener noreferrer" 
              class="track-btn">
              <img src="assets/delivery-truck.svg" alt="" class="btn-icon">
-             <span>ติดตามพัสดุ KEX</span>
+             <span>เช็กพัสดุ</span>
           </a>
         </div>
       `;
