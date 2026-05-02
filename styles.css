@@ -319,4 +319,10 @@ body {
   .empty-text {
     font-size: 32px;
   }
+
+  search-btn {
+    min-width: auto;
+    padding: 8px 20px;
+    font-size: 16px;
+  }
 }
