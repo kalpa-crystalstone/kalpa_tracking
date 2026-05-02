@@ -1,5 +1,5 @@
 const APPS_SCRIPT_WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbw_TaHEwkAPaaQz3-WAh7oNABuYF7jtxKDRQK6TLbn2_QMZkUdZvUWLwpqq3cDspIrg/exec";
+  "https://script.google.com/macros/s/AKfycbz-qHgo-GxD5gwcn86ChO0h0BM1bEAXfCj4dqtUyK0iSgRKuvoorVcetQyJOenDFeqT/exec";
 const KEX_TRACK_BASE_URL = "https://th.kex-express.com/th/track/?track=";
 
 const form = document.getElementById("lookup-form");
@@ -71,6 +71,7 @@ function normalizeRecords(data) {
     return data.trackingItems.map((item) => ({
       trackingNumber: String(item.trackingNumber || "").trim(),
       timestamp: item.timestamp || "",
+      kexLink: item.kexLink || "#",
     }));
   }
 
@@ -78,6 +79,7 @@ function normalizeRecords(data) {
     return data.trackingNumbers.map((trackingNumber) => ({
       trackingNumber: String(trackingNumber || "").trim(),
       timestamp: "",
+      kexLink: item.kexLink || "#",
     }));
   }
 
@@ -192,13 +194,15 @@ function renderResults(records) {
         ? "font-weight: 700;"
         : "font-weight: 400;";
 
+      console.log("record: ", record);
+
       row.innerHTML = `
         <div class="item-content">
           <div class="tracking-info">
             <img src="assets/box-black.svg" class="item-icon" alt="parcel">
             <span class="tracking-number" style="${fontWeight}">${record.trackingNumber.toUpperCase()}</span>
           </div>
-          <a href="${KEX_TRACK_BASE_URL}${encodeURIComponent(record.trackingNumber.toUpperCase())}" 
+          <a href="${record.kexLink}" 
              target="_blank" 
              rel="noopener noreferrer" 
              class="track-btn">
@@ -230,7 +234,10 @@ async function fetchTrackingByMobile(mobileNumber) {
     throw new Error(`ระบบเกิดข้อผิดพลาด ${response.status}`);
   }
 
-  return response.json();
+  const data = response.json();
+  console.log("response: ", data);
+
+  return data;
 }
 
 form.addEventListener("submit", async (event) => {
