@@ -245,11 +245,21 @@ form.addEventListener("submit", async (event) => {
   clearResults();
 
   const mobileNumber = mobileInput.value.trim();
+
+  // 1. Check if the input is empty
   if (!mobileNumber) {
-    setStatus("กรุณาระบุเบอร์โทรศัพท์", "error");
+    setStatus("กรุณากรอกเบอร์โทรศัพท์", "error");
     return;
   }
 
+  // 2. Validate Thai Mobile Format (10 digits starting with 06, 08, or 09)
+  const thaiMobileRegex = /^0[689]\d{8}$/;
+  if (!thaiMobileRegex.test(mobileNumber)) {
+    setStatus("รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง (ตัวอย่าง: 0812345678)", "error");
+    return; // Stop execution immediately (does not load data)
+  }
+
+  // 3. Proceed to fetch data if format is correct
   submitBtn.disabled = true;
   setStatus("กำลังค้นหา...", "loading");
 

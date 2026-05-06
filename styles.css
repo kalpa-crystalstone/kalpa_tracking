@@ -303,6 +303,12 @@ body {
   opacity: 1;
 }
 
+a[href^="tel"] {
+  color: inherit; /* Keeps the text color the same as the surrounding paragraph */
+  text-decoration: none; /* Removes the underline */
+  cursor: default;
+}
+
 @media (max-width: 768px) {
   .hint {
     font-size: 14px;
