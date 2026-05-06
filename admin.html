@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta property="og:title" content="Kalpa Tracking - Admin Panel" />
+    <meta
+      property="og:description"
+      content="ระบบจัดการข้อมูลพัสดุสำหรับผู้ดูแลระบบ"
+    />
+    <meta
+      property="og:image"
+      content="https://kalpa-crystalstone.github.io/kalpa_tracking/assets/logo_profile_white_print.png"
+    />
+    <meta property="og:type" content="website" />
+
+    <title>ระบบผู้ดูแลระบบ (Admin Sync) | Kalpa Tracking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./admin.css" />
+  </head>
+  <body>
+    <div class="admin-container">
+      <section id="admin-auth-panel" class="admin-card">
+        <h2 class="admin-title">🔒 กรุณายืนยันตัวตน</h2>
+        <p class="admin-hint">
+          หน้านี้สำหรับผู้ดูแลระบบเท่านั้น โปรดกรอกรหัสผ่านเพื่อเข้าใช้งาน
+        </p>
+
+        <div class="form-group">
+          <label class="form-label" for="admin-passcode">
+            รหัสผ่านเข้าใช้งาน (Passcode)
+          </label>
+          <input
+            id="admin-passcode"
+            type="password"
+            class="admin-input-text"
+            placeholder="กรอกรหัสผ่านตรงนี้"
+          />
+        </div>
+        <button id="auth-btn" class="admin-btn" type="button">
+          ยืนยันรหัสผ่าน
+        </button>
+        <div id="auth-status" class="admin-status"></div>
+      </section>
+
+      <div id="admin-main-area"></div>
+    </div>
+
+    <script src="./admin.js"></script>
+  </body>
+</html>
