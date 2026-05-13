@@ -67,8 +67,10 @@ function clearResults() {
 }
 
 function normalizeRecords(data) {
+  let records = [];
+
   if (Array.isArray(data.trackingItems)) {
-    return data.trackingItems.map((item) => ({
+    records = data.trackingItems.map((item) => ({
       trackingNumber: String(item.trackingNumber || "").trim(),
       timestamp: item.timestamp || "",
       kexLink: item.kexLink || "#",
@@ -76,14 +78,21 @@ function normalizeRecords(data) {
   }
 
   if (Array.isArray(data.trackingNumbers)) {
-    return data.trackingNumbers.map((trackingNumber) => ({
+    records = data.trackingNumbers.map((trackingNumber) => ({
       trackingNumber: String(trackingNumber || "").trim(),
       timestamp: "",
       kexLink: item.kexLink || "#",
     }));
   }
 
-  return [];
+  // Sort by timestamp descending (newest first)
+  return records.sort((a, b) => {
+    // Treat empty timestamps as the "oldest" (at the end of the list)
+    if (!a.timestamp) return 1;
+    if (!b.timestamp) return -1;
+
+    return new Date(b.timestamp) - new Date(a.timestamp);
+  });
 }
 
 function parseTimestamp(timestampValue) {
